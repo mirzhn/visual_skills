@@ -3,10 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello world </title>
+    <title>Radar Chart Example</title>
+    <style>
+        #chart-container {
+            width: 300px;
+            height: 300px;
+            position: relative;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script id="jsonData" src="data.json" type="application/json">
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const rawData = document.getElementById('jsonData').textContent;
+            const jsonData = JSON.parse(rawData);
+
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            const config = {
+                type: 'radar',
+                data: jsonData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    elements: {
+                        line: {
+                            borderWidth: 3
+                        }
+                    }
+                }
+            };
+            const radarChart = new Chart(ctx, config);
+        });
+    </script>
 </head>
 <body>
-    <h1>hello world</h1>
-    <p>This is a simple webpage hosted on GitHub Pages.</p>
+    <div id="chart-container">
+        <canvas id="radarChart"></canvas>
+    </div>
 </body>
 </html>
